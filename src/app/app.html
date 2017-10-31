@@ -1,0 +1,27 @@
+<ion-menu id="myMenu" [content]="content">
+  <ion-header>
+    <ion-toolbar text-center>
+      <img width="150" height="150" src="../assets/img/profile_img.png">
+      <h3>Username</h3>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content [ngStyle]="{'background':'#337ab7'}">
+    <ion-list>
+      <button ion-item large (click)="home()" menuClose>
+        <ion-icon name="home" class="menuList"></ion-icon> Home
+      </button>
+      <button ion-item (click)="syncToLatest('sync')" menuClose>
+        <ion-icon name="sync" class="menuList"></ion-icon> Sync to Latest
+      </button>
+      <button ion-item (click)="checkReport()" menuClose>
+        <ion-icon name="document" class="menuList"></ion-icon> Check Reports
+      </button>
+      <button ion-item (click)="logOut()" menuClose>
+        <ion-icon name="log-out" class="menuList"></ion-icon> Logout
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>

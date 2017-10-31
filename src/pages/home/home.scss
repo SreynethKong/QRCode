@@ -1,0 +1,42 @@
+page-home {
+    ion-col {
+        background-color: #f0f5ff;
+        border: 1px solid #e6e9ee;
+        border-radius: 2px;
+        padding: 5px;
+        text-align: center;
+      }
+
+    ion-col div{
+        padding-bottom: 5px;
+        font-weight: bold;
+        font-size: 15px;
+        text-decoration: underline;
+    }
+    .menuToggle{
+        background: none;
+    }
+
+    .total{
+        padding: 10px;
+        font-weight: bold;
+    }
+    .check{
+        // color: gray;
+        text-decoration: underline;
+        position: relative;
+        text-align: center;
+    }
+    .confirm{
+        background: none;
+        border: none;
+        padding: 10px 3px 0 0;
+    }
+    .left{
+        margin-right: 2px;
+    }
+    .right{
+        margin-left: 2px;
+    }
+
+}

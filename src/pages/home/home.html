@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title class="title">
+      Shuttle Bus Schedule
+    </ion-title>
+    <button ion-button large left menuToggle [ngStyle]="{'background':'none'}">
+      <ion-icon name="menu" class="menuToggle"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card ion-item *ngFor="let schedule of scheduleList;let i = index" [ngStyle]="{'margin-bottom':'10px', 'background' : random[i]}">
+      <ion-card-header>
+        <h1>{{schedule.destination}}</h1>
+        <p>{{schedule.date_of_travel}}</p>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div>Departure Time</div>
+              <h2> {{schedule.departure}} </h2>
+            </ion-col>
+            <ion-col>
+              <div>Arrival Time</div>
+              <h2> {{schedule.arrival}} </h2>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <p class="total">Total Passengers: {{schedule.customer+schedule.student+schedule.staff}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <p>Customer</p>
+              <h2> {{schedule.customer}} </h2>
+            </ion-col>
+            <ion-col>
+              <p>Student</p>
+              <h2> {{schedule.student}} </h2>
+            </ion-col>
+            <ion-col>
+              <p>Staff</p>
+              <h2> {{schedule.staff}} </h2>
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="checkDate[(schedule.bus_per_schedule_id)+'CheckDate']">
+            <ion-col class="confirm">
+              <button ion-button outline block class="left" color="dark" [disabled]="disabled[(schedule.bus_per_schedule_id)+'LeaveButton']" (click)="leave(schedule.bus_per_schedule_id)">Leave</button>
+            </ion-col>
+            <ion-col class="confirm">
+              <button ion-button outline block class="right" color="dark" [disabled]="disabled[(schedule.bus_per_schedule_id)+'ArriveButton']" (click)="arrive(schedule.bus_per_schedule_id)">Arrive</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <button ion-button icon-only block round (click)="report(schedule.bus_per_schedule_id)" *ngIf="disabled[(schedule.bus_per_schedule_id)+'ShowReportButton']" [disabled]="disabled[(schedule.bus_per_schedule_id)+'DisableReportButton']">
+          Fill Out Report
+          <ion-icon name="clipboard"></ion-icon>
+        </button>
+        <button ion-button icon-only block round (click)="scan(schedule.bus_per_schedule_id)">
+          Check Passenger
+          <ion-icon name="people"></ion-icon>
+        </button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+</ion-content>
