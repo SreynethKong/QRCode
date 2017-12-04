@@ -25526,6 +25526,14 @@ ion-navbar.toolbar {
   font-size: 25px;
 }
 
+.img-circle {
+  position: relative;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  margin-top: 10px;
+}
+
 page-home ion-col {
   background-color: #f0f5ff;
   border: 1px solid #e6e9ee;
@@ -25568,6 +25576,52 @@ page-home .left {
 
 page-home .right {
   margin-left: 2px;
+}
+
+page-login .error {
+  color: red;
+  float: right;
+  padding-right: 10px;
+}
+
+page-report .input {
+  border: 1px solid grey;
+  width: 100%;
+  padding: 0px 10px;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+
+page-report .input:focus {
+  border: 2px solid #555;
+}
+
+page-report ion-label {
+  font-weight: bold;
+}
+
+page-report ion-card-header {
+  background-color: lightgray;
+}
+
+page-report .data {
+  width: 300px;
+  font-weight: bold;
+}
+
+page-report .center {
+  width: 20%;
+  text-align: center;
+}
+
+page-report .right {
+  width: 40%;
+}
+
+page-report .error {
+  color: red;
+  float: right;
+  padding-right: 10px;
 }
 
 page-scan ion-list h2 {

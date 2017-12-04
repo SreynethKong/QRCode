@@ -7,25 +7,43 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title class="title">Login</ion-title>
+    <ion-title class="title">SBBS</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-item>
-    <ion-label floating>Username</ion-label>
-    <ion-input type="text" [(ngModel)]="registerCredentials.username"></ion-input>
-  </ion-item>
 
-  <ion-item>
-    <ion-label floating>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="registerCredentials.password"></ion-input>
-  </ion-item>
+  <form novalidate (ngSubmit)="login(report)" [formGroup]="loginForm">
 
-  <div padding>
-    <button ion-button color="primary" block (click)="login()">Log In</button>
-  </div>
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input type="text" value="" formControlName="username" (keypress)="noSpace($event)"></ion-input>
+    </ion-item>
+
+    <div class="error" *ngIf="loginForm.get('username').value.toString() =='' && loginForm.get('username').hasError('required') && loginForm.get('username').touched">
+      *field is required
+    </div>
+    <div class="error" *ngIf="loginForm.get('username').hasError('maxlength') && loginForm.get('username').touched">
+      *max length [30]
+    </div>
+    <div class="error" *ngIf="loginForm.get('username').value.toString() !='' && space">
+      *space is not allowed
+    </div>
+
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password" value="" formControlName="password"></ion-input>
+    </ion-item>
+
+    <div class="error" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
+      *field is required
+    </div>
+
+    <div padding>
+      <button ion-button block color="primary">Log In</button>
+    </div>
+  </form>
 
 </ion-content>

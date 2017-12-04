@@ -1,0 +1,113 @@
+<!--
+  Generated template for the ReportPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="home()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title class="title">Report Form</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+
+    <ion-card-header>
+      <h1>Schedule Details</h1>
+    </ion-card-header>
+
+    <ion-card-content padding>
+      <h2>
+        <span class="data">Departure Time : </span> {{reportData.leave}}</h2>
+      <h2>
+        <span class="data">Arrival Time : </span> {{reportData.arrive}}</h2>
+      <h2>
+        <span class="data">Total Time Spent: </span> {{reportData.time}}</h2>
+      <h2 *ngIf="submitForm">
+        <span class="data">Total Distance: </span> {{reportData.distance}} [km]</h2>
+      <h2 *ngIf="submitForm">
+        <span class="data">Fuel in Liters: </span> {{reportData.fuel}} [liters]</h2>
+      <h2 *ngIf="submitForm">
+        <span class="data">Total Expense: </span> {{reportData.expense}} [riels]</h2>
+      <h2 *ngIf="submitForm">
+        <span class="data">Extra Information: </span> {{reportData.extraInfo}}</h2>
+    </ion-card-content>
+
+  </ion-card>
+
+
+
+  <form novalidate (ngSubmit)="onSubmit(report)" [formGroup]="report" *ngIf="form">
+
+    <ion-item no-lines>
+      <ion-label stacked>Total Distance :</ion-label>
+      <ion-input class="input" type="number" value="" min="1" max="999999" formControlName="distance" placeholder="km" (keypress)="onlyDecimalNumberKey($event)"></ion-input>
+    </ion-item>
+
+    <div class="error" *ngIf="report.get('distance').value.toString() == '' && report.get('distance').hasError('required') && report.get('distance').touched">
+      *field is required
+    </div>
+    <div class="error" *ngIf="report.get('distance').value.toString() != '' && report.get('distance').value < 1 && report.get('distance').touched">
+      *value cannot be zero
+    </div>
+    <div class="error" *ngIf="report.get('distance').value > 999999 && report.get('distance').touched">
+      *maximum value [999999]
+    </div>
+
+    <ion-item no-lines>
+      <ion-label stacked>Fuel in Liters :</ion-label>
+      <ion-input class="input" type="number" value="" min="1" max="999999" formControlName="fuel" placeholder="liters" (keypress)="onlyDecimalNumberKey($event)"></ion-input>
+    </ion-item>
+
+    <div class="error" *ngIf="report.get('fuel').value.toString() == '' && report.get('fuel').hasError('required') && report.get('fuel').touched">
+      *field is required
+    </div>
+    <div class="error" *ngIf="report.get('fuel').value.toString() != '' && report.get('fuel').value<1 && report.get('fuel').touched">
+      *value cannot be zero
+    </div>
+    <div class="error" *ngIf="report.get('fuel').value > 999999 && report.get('fuel').touched">
+      *maximum value [999999]
+    </div>
+
+    <ion-item no-lines>
+      <ion-label stacked>Total Expense :</ion-label>
+      <ion-input class="input" type="number" value="" min="100" max="" step="100" formControlName="expense" placeholder="riels"
+        (keypress)="onlyDecimalNumberKey($event)"></ion-input>
+    </ion-item>
+
+    <div class="error" *ngIf="report.get('expense').value.toString() == ''  && report.get('expense').hasError('required') && report.get('expense').touched">
+      *field is required
+    </div>
+    <div class="error" *ngIf="report.get('expense').value.toString() != '' && report.get('expense').value < 100 && report.get('expense').touched">
+      *mininum value [100]
+    </div>
+    <div class="error" *ngIf="report.get('expense').value >= 100 && report.get('expense').value <= 999999999 && report.get('expense').value % 100 !=0  && report.get('expense').touched">
+      *value should be a multiplication of 100
+    </div>
+
+    <div class="error" *ngIf="report.get('expense').value >999999999  && report.get('expense').touched">
+      *maximum value [999999999]
+    </div>
+
+    <ion-item no-lines>
+      <ion-label stacked>Extra Information ( Optional ):</ion-label>
+      <ion-textarea class="input" type="text" value="" formControlName="extraInfo"></ion-textarea>
+    </ion-item>
+
+    <div padding>
+      <button ion-button block color="primary">Submit</button>
+    </div>
+  </form>
+
+
+</ion-content>

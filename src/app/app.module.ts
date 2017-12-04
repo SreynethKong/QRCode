@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { ScanPage } from '../pages/scan/scan';
+import { ReportPage } from '../pages/report/report';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { HttpModule } from '@angular/http';
@@ -21,7 +22,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     MyApp,
     HomePage,
     LoginPage,
-    ScanPage
+    ScanPage,
+    ReportPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     MyApp,
     HomePage,
     LoginPage,
-    ScanPage
+    ScanPage,
+    ReportPage
   ],
   providers: [
     StatusBar,

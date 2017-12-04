@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav, IonicApp, ToastController, LoadingController, Loading } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Http, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { HomePage } from '../pages/home/home';
@@ -20,9 +20,15 @@ export class MyApp {
   alert: any;
   scheduleList: any;
   passengerToUpdate = [];
+  reportToUpdate = [];
+  reportData = {
+    'busPerScheduleID': '',
+    'leave': '',
+    'arrive': ''
+  };
   loading: Loading;
   checkData: any;
-  clear = true;
+  userInfo = { user_id: '', username: '', fullname: '', profile: '' };
 
   @ViewChild(Nav) nav: Nav
   constructor(
@@ -36,6 +42,22 @@ export class MyApp {
     private auth: AuthServiceProvider
   ) {
     if (localStorage.getItem('authentication') == 'authenticated') {
+      this.auth.credential = JSON.parse(localStorage.getItem('credential'));
+      this.auth.update().subscribe(allowed => {
+        if (allowed) {
+          if (this.auth.data.validity == 'valid') {
+            this.userInfo.user_id = this.auth.data.user_id;
+            this.userInfo.username = this.auth.data.username;
+            this.userInfo.fullname = this.auth.data.fullname;
+            this.userInfo.profile = this.auth.data.profile;
+            localStorage.setItem('getAPI', JSON.stringify(this.auth.data.data));
+            localStorage.setItem('credential', JSON.stringify(this.userInfo));
+            this.auth.credential = JSON.parse(localStorage.getItem('credential'));
+          } 
+        }
+      }, error => {
+        console.log(error);
+      });
       this.rootPage = HomePage;
     } else {
       this.rootPage = LoginPage;
@@ -68,7 +90,6 @@ export class MyApp {
         else {
           // go to previous page
           this.nav.setRoot(HomePage);
-
         }
       });
       statusBar.styleDefault();
@@ -81,65 +102,56 @@ export class MyApp {
   }
 
   syncToLatest(action) {
+    console.log(this.auth.update());
     this.showLoading();
-    this.scheduleList = JSON.parse(localStorage.getItem('getAPI'));
-    this.scheduleList.forEach(element => {
-      element.passenger.forEach(element => {
-        if (element.status == 'false') {
-          this.passengerToUpdate.push(element.id);
-        }
-      });
-    });
 
-    console.log("Passenger: " + this.passengerToUpdate);
-    let credential = JSON.parse(localStorage.getItem('credential'));
-
-    let headers = new Headers();
-    headers.append('data', JSON.stringify(this.passengerToUpdate));
-
-    this.http.get('http://10.10.16.135:8080/shuttle-bus/updatePassenger?username=' + credential.username + '&&password=' + credential.password, { headers: headers })
-      .map(res => res.json())
-      .subscribe(data => {
-        console.log(data.update);
-        if (data.update == 'success') {
-          if (action == 'sync') {
-            localStorage.setItem('getAPI', JSON.stringify(data.data));
-            this.loading.dismiss();
-            alert("Synced to latest");
-          } else if (action == 'logout') {
-            data.data.forEach(element => {
-              
-              if(new Date(element['date_of_travel']).toLocaleDateString() == new Date().toLocaleDateString()){
-                console.log("Date of Travel: "+element['date_of_travel']);
-                this.clear = false;
-              }
-            });
-            console.log("Clear: "+this.clear);
-            if(this.clear){
+    this.auth.update().subscribe(allowed => {
+      if (allowed) {
+        if (this.auth.data.validity == 'valid') {
+          if (this.auth.data.update == 'success') {
+            if (action == 'sync') {
+              this.userInfo.user_id = this.auth.data.user_id;
+              this.userInfo.username = this.auth.data.username;
+              this.userInfo.fullname = this.auth.data.fullname;
+              this.userInfo.profile = this.auth.data.profile;
+              localStorage.setItem('getAPI', JSON.stringify(this.auth.data.data));
+              localStorage.setItem('credential', JSON.stringify(this.userInfo));
+              this.auth.credential = JSON.parse(localStorage.getItem('credential'));
+              this.loading.dismiss();
+              alert("Synced to latest");
+              this.nav.setRoot(HomePage);
+            } else if (action == 'logout') {
               localStorage.clear();
-          }
+              this.loading.dismiss();
+              this.nav.setRoot(LoginPage);
+            }
+          } else {
             this.loading.dismiss();
+            alert("Error Updation!");
+            this.nav.setRoot(HomePage);
           }
         } else {
           this.loading.dismiss();
-          alert("Error!");
+          alert("Error Authentication!");
+          this.nav.setRoot(HomePage);
         }
-      }, (err) => {
+      }else{
         this.loading.dismiss();
         alert("Error Connection!");
-        console.log(err);
-      });
-    this.passengerToUpdate = [];
+        this.nav.setRoot(HomePage);
+      }
+    }, error => {
+      console.log(error);
+    });
   }
 
   checkReport() {
-    window.open('http://google.com', '_self');
+    window.open('http://10.10.16.135:8080/shuttle-bus', '_self');
   }
 
   public logOut() {
     this.auth.logout().subscribe(succ => {
       this.syncToLatest('logout');
-      this.nav.setRoot(LoginPage);
     });
   }
 

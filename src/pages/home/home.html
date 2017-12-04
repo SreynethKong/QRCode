@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-card ion-item *ngFor="let schedule of scheduleList;let i = index" [ngStyle]="{'margin-bottom':'10px', 'background' : random[i]}">
+    <ion-card ion-item *ngFor="let schedule of scheduleList;let i = index" [ngStyle]="{'margin-bottom':'10px', 'background' : 'white'}">
       <ion-card-header>
         <h1>{{schedule.destination}}</h1>
         <p>{{schedule.date_of_travel}}</p>
@@ -57,14 +57,12 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-
+        
         <button ion-button icon-only block round (click)="report(schedule.bus_per_schedule_id)" *ngIf="disabled[(schedule.bus_per_schedule_id)+'ShowReportButton']" [disabled]="disabled[(schedule.bus_per_schedule_id)+'DisableReportButton']">
           Fill Out Report
-          <ion-icon name="clipboard"></ion-icon>
         </button>
         <button ion-button icon-only block round (click)="scan(schedule.bus_per_schedule_id)">
           Check Passenger
-          <ion-icon name="people"></ion-icon>
         </button>
       </ion-card-content>
     </ion-card>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -11,20 +11,19 @@ import 'rxjs/add/operator/map';
   for more info on providers and Angular DI.
 */
 
-export class User {
-  username: string;
-  password: string;
-
-  constructor(username: string, password: string) {
-    this.username = username;
-    this.password = password;
-  }
-}
-
 @Injectable()
 export class AuthServiceProvider {
 
-  currentUser: User;
+  credential = {user_id:'', username:'',fullname:'',profile:''};
+  scheduleList: any;
+  data: any;
+  passengerToUpdate = [];
+  reportToUpdate = [];
+  reportData = {
+    'busPerScheduleID': '',
+    'leave': '',
+    'arrive': ''
+  };
 
   constructor(public http: Http) {
     console.log('Hello AuthServiceProvider Provider');
@@ -37,38 +36,101 @@ export class AuthServiceProvider {
       return Observable.create(observer => {
         // At this point make a request to your backend to make a real check!
 
-        this.http.get('http://10.10.16.135:8080/shuttle-bus/schedule_api?username=' + credentials.username + '&&password=' + credentials.password).map(res => res.json()).subscribe(data => {
+        this.http.get('http://10.10.16.135:8080/shuttle-bus/checkValidity?username=' + credentials.username + '&&password=' + credentials.password).map(res => res.json()).subscribe(data => {
 
           if (data.validity === 'valid') {
-            this.currentUser = new User(credentials.username, credentials.password);
+            data.data.forEach(element => {
+              if(element.report_arrival != 'false'){
+                localStorage.setItem(element.bus_per_schedule_id+'ArriveButton','arrived');
+                localStorage.setItem(element.bus_per_schedule_id+'Arrive',element.report_arrival);
+              }
+              if(element.report_departure != 'false'){
+                localStorage.setItem(element.bus_per_schedule_id+'LeaveButton','left');
+                localStorage.setItem(element.bus_per_schedule_id+'Leave',element.report_departure)
+              }
+              if(element.report_status == 'true'){
+                localStorage.setItem(element.bus_per_schedule_id+'DisableReportButton','reported');
+              }
+            });
+            this.credential.user_id = data.user_id;
+            this.credential.username = data.username;
+            this.credential.fullname = data.fullname;
+            this.credential.profile = data.profile;
             localStorage.setItem('getAPI', JSON.stringify(data.data));
             localStorage.setItem('authentication', 'authenticated');
-            localStorage.setItem('credential',JSON.stringify(credentials));
+            localStorage.setItem('credential',JSON.stringify(this.credential));
             console.log(credentials);
             observer.next(true);
             observer.complete();
-          } else {
+          } else if (data.validity ==='invalid'){
+            localStorage.setItem('authentication', 'denied');
             observer.next(false);
             observer.complete();
           }
-
+        }, (err) => {
+          console.log(err);
+          observer.next(false);
+          observer.complete();
         });
-
       });
     }
   }
 
-
-  public getUserInfo(): User {
-    return this.currentUser;
-  }
-
   public logout() {
     return Observable.create(observer => {
-      this.currentUser = null;
       observer.next(true);
       observer.complete();
     });
   }
 
+  public update(){
+    return Observable.create( observer=>{
+      this.scheduleList = JSON.parse(localStorage.getItem('getAPI'));
+      this.scheduleList.forEach(element => {
+  
+        this.reportData.busPerScheduleID = element.bus_per_schedule_id;
+        if (element.report_departure == 'false') {
+          this.reportData.leave = localStorage.getItem(element.bus_per_schedule_id + 'Leave');
+        } else {
+          this.reportData.leave = element.report_departure;
+        }
+        if (element.report_arrival == 'false') {
+          this.reportData.arrive = localStorage.getItem(element.bus_per_schedule_id + 'Arrive');
+        } else {
+          this.reportData.arrive = element.report_arrival;
+        }
+        localStorage.setItem('reportData',JSON.stringify(this.reportData));
+        
+        this.reportToUpdate.push(JSON.parse(localStorage.getItem('reportData')));
+        element.passenger.forEach(element => {
+          if (element.status == 'true') {
+            this.passengerToUpdate.push(element.id);
+          }
+        });
+      });
+      console.log("Passenger: " + this.passengerToUpdate);
+      let credential = JSON.parse(localStorage.getItem('credential'));
+  
+      let headers = new Headers();
+      headers.append('data', JSON.stringify(this.passengerToUpdate));
+      headers.append('report', JSON.stringify(this.reportToUpdate));
+      this.http.get('http://10.10.16.135:8080/shuttle-bus/updatePassenger?userId=' + credential.user_id, { headers: headers })
+        .map(res => res.json())
+        .subscribe(data => {
+          console.log(data.update);
+          this.data = data;
+          this.passengerToUpdate = [];
+          this.reportToUpdate = [];
+          observer.next(true);
+          observer.complete();
+        }, (err) => {
+          this.passengerToUpdate = [];
+          this.reportToUpdate = [];
+          console.log(err);
+          observer.next(false);
+          observer.complete();
+        });
+    });
+
+  }
 }

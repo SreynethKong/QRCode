@@ -65,7 +65,7 @@ export class ScanPage {
             data.passenger.forEach(element => {
   
                if (barcodeData.text == element.qrcode) {
-                element.status = 'false';
+                element.status = 'true';
                 this.passengerToUpdate.push(element.user_id);
                 this.flag = true;
                 let alert = this.alertCtrl.create({
@@ -123,7 +123,6 @@ export class ScanPage {
       }
     this.flag = false;
     console.log("Passengers to update: "+this.passengerToUpdate);
-    localStorage.removeItem('getAPI');
     localStorage.setItem('getAPI',JSON.stringify(this.passengerList));
       
     },(err) => {
