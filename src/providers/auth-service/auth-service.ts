@@ -36,7 +36,7 @@ export class AuthServiceProvider {
       return Observable.create(observer => {
         // At this point make a request to your backend to make a real check!
 
-        this.http.get('http://10.10.16.135:8080/shuttle-bus/checkValidity?username=' + credentials.username + '&&password=' + credentials.password).map(res => res.json()).subscribe(data => {
+        this.http.get('http://96.9.67.154:8081/shuttlebus/checkValidity?username=' + credentials.username + '&&password=' + credentials.password).map(res => res.json()).subscribe(data => {
 
           if (data.validity === 'valid') {
             data.data.forEach(element => {
@@ -114,7 +114,7 @@ export class AuthServiceProvider {
       let headers = new Headers();
       headers.append('data', JSON.stringify(this.passengerToUpdate));
       headers.append('report', JSON.stringify(this.reportToUpdate));
-      this.http.get('http://10.10.16.135:8080/shuttle-bus/updatePassenger?userId=' + credential.user_id, { headers: headers })
+      this.http.get('http://96.9.67.154:8081/shuttlebus/updatePassenger?userId=' + credential.user_id, { headers: headers })
         .map(res => res.json())
         .subscribe(data => {
           console.log(data.update);

@@ -269,7 +269,7 @@ var ReportPage = (function () {
             this.reportData.fuel = parseFloat(this.report.get('fuel').value).toString();
             this.reportData.expense = parseFloat(this.report.get('expense').value).toString();
             this.reportData.extraInfo = this.report.get('extraInfo').value;
-            var confirm_1 = this.alertCtrl.create({
+            var confirm = this.alertCtrl.create({
                 title: 'Confirm your report input',
                 message: 'Total Distance : ' + this.reportData.distance + ' [km]' +
                     '<br>Fuel in Liters : ' + this.reportData.fuel + ' [liters]' +
@@ -291,7 +291,7 @@ var ReportPage = (function () {
                     }
                 ]
             });
-            confirm_1.present();
+            confirm.present();
         }
     };
     ReportPage.prototype.confirmSubmit = function (reportData) {
@@ -301,7 +301,7 @@ var ReportPage = (function () {
         localStorage.setItem(reportData.busPerScheduleID + 'reportData', JSON.stringify(reportData));
         var headers = new __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* Headers */]();
         headers.append('data', JSON.stringify(reportData));
-        this.http.get('http://10.10.16.135:8080/shuttle-bus/updateDriverReport', { headers: headers })
+        this.http.get('http://96.9.67.154:8081/shuttlebus/updateDriverReport', { headers: headers })
             .map(function (res) { return res.json(); })
             .subscribe(function (data) {
             if (data.update == 'success') {
@@ -356,14 +356,10 @@ ReportPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-report',template:/*ion-inline-start:"/Users/MacBook/QRCode/src/pages/report/report.html"*/'<!--\n  Generated template for the ReportPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-buttons left>\n      <button ion-button icon-only (click)="home()">\n        <ion-icon name="arrow-round-back"></ion-icon>\n      </button>\n    </ion-buttons>\n\n    <ion-title class="title">Report Form</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-card>\n\n    <ion-card-header>\n      <h1>Schedule Details</h1>\n    </ion-card-header>\n\n    <ion-card-content padding>\n      <h2>\n        <span class="data">Departure Time : </span> {{reportData.leave}}</h2>\n      <h2>\n        <span class="data">Arrival Time : </span> {{reportData.arrive}}</h2>\n      <h2>\n        <span class="data">Total Time Spent: </span> {{reportData.time}}</h2>\n      <h2 *ngIf="submitForm">\n        <span class="data">Total Distance: </span> {{reportData.distance}} [km]</h2>\n      <h2 *ngIf="submitForm">\n        <span class="data">Fuel in Liters: </span> {{reportData.fuel}} [liters]</h2>\n      <h2 *ngIf="submitForm">\n        <span class="data">Total Expense: </span> {{reportData.expense}} [riels]</h2>\n      <h2 *ngIf="submitForm">\n        <span class="data">Extra Information: </span> {{reportData.extraInfo}}</h2>\n    </ion-card-content>\n\n  </ion-card>\n\n\n\n  <form novalidate (ngSubmit)="onSubmit(report)" [formGroup]="report" *ngIf="form">\n\n    <ion-item no-lines>\n      <ion-label stacked>Total Distance :</ion-label>\n      <ion-input class="input" type="number" value="" min="1" max="999999" formControlName="distance" placeholder="km" (keypress)="onlyDecimalNumberKey($event)"></ion-input>\n    </ion-item>\n\n    <div class="error" *ngIf="report.get(\'distance\').value.toString() == \'\' && report.get(\'distance\').hasError(\'required\') && report.get(\'distance\').touched">\n      *field is required\n    </div>\n    <div class="error" *ngIf="report.get(\'distance\').value.toString() != \'\' && report.get(\'distance\').value < 1 && report.get(\'distance\').touched">\n      *value cannot be zero\n    </div>\n    <div class="error" *ngIf="report.get(\'distance\').value > 999999 && report.get(\'distance\').touched">\n      *maximum value [999999]\n    </div>\n\n    <ion-item no-lines>\n      <ion-label stacked>Fuel in Liters :</ion-label>\n      <ion-input class="input" type="number" value="" min="1" max="999999" formControlName="fuel" placeholder="liters" (keypress)="onlyDecimalNumberKey($event)"></ion-input>\n    </ion-item>\n\n    <div class="error" *ngIf="report.get(\'fuel\').value.toString() == \'\' && report.get(\'fuel\').hasError(\'required\') && report.get(\'fuel\').touched">\n      *field is required\n    </div>\n    <div class="error" *ngIf="report.get(\'fuel\').value.toString() != \'\' && report.get(\'fuel\').value<1 && report.get(\'fuel\').touched">\n      *value cannot be zero\n    </div>\n    <div class="error" *ngIf="report.get(\'fuel\').value > 999999 && report.get(\'fuel\').touched">\n      *maximum value [999999]\n    </div>\n\n    <ion-item no-lines>\n      <ion-label stacked>Total Expense :</ion-label>\n      <ion-input class="input" type="number" value="" min="100" max="" step="100" formControlName="expense" placeholder="riels"\n        (keypress)="onlyDecimalNumberKey($event)"></ion-input>\n    </ion-item>\n\n    <div class="error" *ngIf="report.get(\'expense\').value.toString() == \'\'  && report.get(\'expense\').hasError(\'required\') && report.get(\'expense\').touched">\n      *field is required\n    </div>\n    <div class="error" *ngIf="report.get(\'expense\').value.toString() != \'\' && report.get(\'expense\').value < 100 && report.get(\'expense\').touched">\n      *mininum value [100]\n    </div>\n    <div class="error" *ngIf="report.get(\'expense\').value >= 100 && report.get(\'expense\').value <= 999999999 && report.get(\'expense\').value % 100 !=0  && report.get(\'expense\').touched">\n      *value should be a multiplication of 100\n    </div>\n\n    <div class="error" *ngIf="report.get(\'expense\').value >999999999  && report.get(\'expense\').touched">\n      *maximum value [999999999]\n    </div>\n\n    <ion-item no-lines>\n      <ion-label stacked>Extra Information ( Optional ):</ion-label>\n      <ion-textarea class="input" type="text" value="" formControlName="extraInfo"></ion-textarea>\n    </ion-item>\n\n    <div padding>\n      <button ion-button block color="primary">Submit</button>\n    </div>\n  </form>\n\n\n</ion-content>'/*ion-inline-end:"/Users/MacBook/QRCode/src/pages/report/report.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]) === "function" && _f || Object])
 ], ReportPage);
 
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=report.js.map
 
 /***/ }),
@@ -916,11 +912,11 @@ var HomePage = (function () {
     };
     HomePage.prototype.getTime = function (action, bus_per_schedule_id) {
         var _this = this;
-        this.http.get('http://10.10.16.135:8080/shuttle-bus/getTime')
+        this.http.get('http://96.9.67.154:8081/shuttlebus/getTime')
             .map(function (res) { return res.json(); })
             .subscribe(function (ele) {
             if (action == 'Leave') {
-                var alert_1 = _this.alertCtrl.create({
+                var alert = _this.alertCtrl.create({
                     title: 'Leave Confirmation!',
                     subTitle: 'Click OK to confirm your departure at: ' + ele.time,
                     buttons: [
@@ -941,10 +937,10 @@ var HomePage = (function () {
                         }
                     ]
                 });
-                alert_1.present();
+                alert.present();
             }
             if (action == 'Arrive') {
-                var alert_2 = _this.alertCtrl.create({
+                var alert = _this.alertCtrl.create({
                     title: 'Arrival Confirmation!',
                     subTitle: 'Click OK to certify your arrival at: ' + ele.time,
                     buttons: [
@@ -965,7 +961,7 @@ var HomePage = (function () {
                         }
                     ]
                 });
-                alert_2.present();
+                alert.present();
             }
         }, function (err) {
             alert('Connection Error!');
@@ -1007,12 +1003,10 @@ HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-home',template:/*ion-inline-start:"/Users/MacBook/QRCode/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title class="title">\n      Shuttle Bus Schedule\n    </ion-title>\n    <button ion-button large left menuToggle [ngStyle]="{\'background\':\'none\'}">\n      <ion-icon name="menu" class="menuToggle"></ion-icon>\n    </button>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-card ion-item *ngFor="let schedule of scheduleList;let i = index" [ngStyle]="{\'margin-bottom\':\'10px\', \'background\' : \'white\'}">\n      <ion-card-header>\n        <h1>{{schedule.destination}}</h1>\n        <p>{{schedule.date_of_travel}}</p>\n      </ion-card-header>\n      <ion-card-content>\n        <ion-grid>\n          <ion-row>\n            <ion-col>\n              <div>Departure Time</div>\n              <h2> {{schedule.departure}} </h2>\n            </ion-col>\n            <ion-col>\n              <div>Arrival Time</div>\n              <h2> {{schedule.arrival}} </h2>\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <p class="total">Total Passengers: {{schedule.customer+schedule.student+schedule.staff}}</p>\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <p>Customer</p>\n              <h2> {{schedule.customer}} </h2>\n            </ion-col>\n            <ion-col>\n              <p>Student</p>\n              <h2> {{schedule.student}} </h2>\n            </ion-col>\n            <ion-col>\n              <p>Staff</p>\n              <h2> {{schedule.staff}} </h2>\n            </ion-col>\n          </ion-row>\n\n          <ion-row *ngIf="checkDate[(schedule.bus_per_schedule_id)+\'CheckDate\']">\n            <ion-col class="confirm">\n              <button ion-button outline block class="left" color="dark" [disabled]="disabled[(schedule.bus_per_schedule_id)+\'LeaveButton\']" (click)="leave(schedule.bus_per_schedule_id)">Leave</button>\n            </ion-col>\n            <ion-col class="confirm">\n              <button ion-button outline block class="right" color="dark" [disabled]="disabled[(schedule.bus_per_schedule_id)+\'ArriveButton\']" (click)="arrive(schedule.bus_per_schedule_id)">Arrive</button>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n        \n        <button ion-button icon-only block round (click)="report(schedule.bus_per_schedule_id)" *ngIf="disabled[(schedule.bus_per_schedule_id)+\'ShowReportButton\']" [disabled]="disabled[(schedule.bus_per_schedule_id)+\'DisableReportButton\']">\n          Fill Out Report\n        </button>\n        <button ion-button icon-only block round (click)="scan(schedule.bus_per_schedule_id)">\n          Check Passenger\n        </button>\n      </ion-card-content>\n    </ion-card>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/MacBook/QRCode/src/pages/home/home.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */],
-        __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_http__["b" /* Http */]) === "function" && _d || Object])
 ], HomePage);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=home.js.map
 
 /***/ }),
@@ -1068,7 +1062,7 @@ var AuthServiceProvider = (function () {
         else {
             return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"].create(function (observer) {
                 // At this point make a request to your backend to make a real check!
-                _this.http.get('http://10.10.16.135:8080/shuttle-bus/checkValidity?username=' + credentials.username + '&&password=' + credentials.password).map(function (res) { return res.json(); }).subscribe(function (data) {
+                _this.http.get('http://96.9.67.154:8081/shuttlebus/checkValidity?username=' + credentials.username + '&&password=' + credentials.password).map(function (res) { return res.json(); }).subscribe(function (data) {
                     if (data.validity === 'valid') {
                         data.data.forEach(function (element) {
                             if (element.report_arrival != 'false') {
@@ -1144,7 +1138,7 @@ var AuthServiceProvider = (function () {
             var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
             headers.append('data', JSON.stringify(_this.passengerToUpdate));
             headers.append('report', JSON.stringify(_this.reportToUpdate));
-            _this.http.get('http://10.10.16.135:8080/shuttle-bus/updatePassenger?userId=' + credential.user_id, { headers: headers })
+            _this.http.get('http://96.9.67.154:8081/shuttlebus/updatePassenger?userId=' + credential.user_id, { headers: headers })
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 console.log(data.update);
@@ -1166,9 +1160,10 @@ var AuthServiceProvider = (function () {
 }());
 AuthServiceProvider = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], AuthServiceProvider);
 
+var _a;
 //# sourceMappingURL=auth-service.js.map
 
 /***/ })

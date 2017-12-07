@@ -136,7 +136,7 @@ export class ReportPage {
     localStorage.setItem(reportData.busPerScheduleID + 'reportData', JSON.stringify(reportData));
     let headers = new Headers();
     headers.append('data', JSON.stringify(reportData));
-    this.http.get('http://10.10.16.135:8080/shuttle-bus/updateDriverReport', { headers: headers })
+    this.http.get('http://96.9.67.154:8081/shuttlebus/updateDriverReport', { headers: headers })
       .map(res => res.json())
       .subscribe(data => {
         if (data.update == 'success') {

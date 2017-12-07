@@ -51,7 +51,7 @@ export class HomePage {
   }
 
   getTime(action, bus_per_schedule_id) {
-    this.http.get('http://10.10.16.135:8080/shuttle-bus/getTime')
+    this.http.get('http://96.9.67.154:8081/shuttlebus/getTime')
       .map(res => res.json())
       .subscribe(ele => {
         if (action == 'Leave') {
