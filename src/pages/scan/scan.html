@@ -18,16 +18,41 @@
 
 <ion-content padding>
   <div padding>
-    <button ion-button large color="primary" block (click)="scan()" *ngIf="buttonScan" >
+    <button ion-button large color="primary" block [disabled]="buttonSca" (click)="scan()"  >
       <ion-icon name="qr-scanner"> Scan QRCode</ion-icon>
     </button>
   </div>
 
   <ion-list>
     <h2>List of Passengers</h2>
-    <ion-item *ngFor="let passenger of passenger; let i = index">
-      {{i+1}}. {{passenger.full_name}}
-      <ion-icon item-end [ngStyle]="{'color':'green'}" name="checkmark-circle" *ngIf="(passenger.status)=='true'"></ion-icon>
-    </ion-item>
+    <ion-grid >
+      <ion-row>
+        <ion-col col-7 class="col-header">
+          Name
+        </ion-col>
+        <ion-col class="col-header">
+          Seats
+        </ion-col>
+        <ion-col col-2 class="col-header">
+          Status
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let passenger of passenger; let i = index">
+        <ion-col col-7 class="col-content-name">
+          {{i+1}}. {{passenger.full_name}}
+        </ion-col>
+        <ion-col class="col-content">
+          {{passenger.no_of_booking}}
+        </ion-col>
+        <ion-col col-2 class="col-content">
+          <ion-icon item-end [ngStyle]="{'color':'green'}" name="checkmark-circle" *ngIf="(passenger.qr_status)==true"></ion-icon>
+          <ion-icon item-end [ngStyle]="{'color':'red'}" name="close-circle" *ngIf="(passenger.qr_status)==false"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- <ion-item *ngFor="let passenger of passenger; let i = index">
+      {{i+1}}. {{passenger.full_name}} {{passenger.no_of_booking}}
+      <ion-icon item-end [ngStyle]="{'color':'green'}" name="checkmark-circle" *ngIf="(passenger.qr_status)==false"></ion-icon>
+    </ion-item> -->
   </ion-list>
 </ion-content>

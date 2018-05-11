@@ -4,6 +4,7 @@ import { HomePage } from '../home/home'
 import { Http } from '@angular/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
+// import { Network } from '@ionic-native/network';
 /**
  * Generated class for the LoginPage page.
  *
@@ -28,12 +29,12 @@ export class LoginPage {
       
   }
 
-  username = '';
+  email = '';
   password = '';
   loading: Loading;
   loginForm: FormGroup;
   space = false;
-  registerCredentials = { username: '', password: ''};
+  registerCredentials = { email: '', password: ''};
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
@@ -47,7 +48,7 @@ export class LoginPage {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.required,Validators.maxLength(30)]),
+      email: new FormControl('', [Validators.required,Validators.email]),
       password: new FormControl('', [Validators.required])
     });
 
@@ -63,22 +64,18 @@ export class LoginPage {
   }
 
   public login() {
-    this.registerCredentials.username = this.loginForm.get('username').value;
+    this.registerCredentials.email = this.loginForm.get('email').value;
     this.registerCredentials.password = this.loginForm.get('password').value;
-    console.log(this.loginForm.get('username').value);
-    let format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
-    if(this.registerCredentials.username.toString() == '' || this.registerCredentials.password.toString() == ''){
+    console.log(this.loginForm.get('email').value);
+    var email_format = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+    if(this.registerCredentials.email.toString() == '' || this.registerCredentials.password.toString() == ''){
       this.showLoading();
       this.showError("Please input your credentials!");
     }else{
-      if(this.registerCredentials.username.toString().length >30){
-        this.showLoading();
-        this.showError("Check your username again!\nUsername has reached maximum length of 30 characters");
-      }
-      else if(format.test(this.registerCredentials.username)||format.test(this.registerCredentials.password)){
+      if(!email_format.test(this.registerCredentials.email)){
         console.log('True');
         this.showLoading();
-        this.showError("No special characters allowed!");
+        this.showError("Please input valid email address!");
       }else{
         this.showLoading();
         this.auth.login(this.registerCredentials).subscribe(allowed => {
@@ -114,7 +111,7 @@ export class LoginPage {
   showError(text) {
     this.loading.dismiss();
     let alert = this.alertCtrl.create({
-      title: 'Incorrect Username or Password!',
+      title: 'Incorrect Email or Password!',
       subTitle: text,
       buttons: ['OK']
     });

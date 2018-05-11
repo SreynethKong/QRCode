@@ -22,17 +22,18 @@ export class ScanPage {
   passengerList: any;
   passenger: any;
   bpsi = '';
-  passengerToUpdate= [];
+  passengerToUpdate = [];
   flag = false;
-  buttonScan = false;
-  options: BarcodeScannerOptions;
+  buttonScan = true;
+  view: any;
+  private options: BarcodeScannerOptions;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
+    private navCtrl: NavController,
+    private navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
     private alertCtrl: AlertController,
-    public toastCtrl: ToastController
+    private toastCtrl: ToastController
   ) {
     this.getPassenger();
   }
@@ -51,50 +52,78 @@ export class ScanPage {
     }
     this.barcodeScanner.scan(this.options).then((barcodeData) => {
 
-      if(barcodeData.cancelled){
+      if (barcodeData.cancelled) {
+        localStorage.setItem('cancel_scan','true');
         let toast = this.toastCtrl.create({
           message: 'No QRCode Found',
           duration: 3000,
-          position: 'bottom'
+          position: 'bottom',
         });
         toast.present();
+        console.log("BarcodeScanner is cancelled!!!");
+      
       }
-      else{
+      else {
         this.passengerList.forEach(data => {
-          if (data.bus_per_schedule_id == this.bpsi) {
-            data.passenger.forEach(element => {
-  
-               if (barcodeData.text == element.qrcode) {
-                element.status = 'true';
-                this.passengerToUpdate.push(element.user_id);
+          if (data.id == this.bpsi) {
+            data.passenger_list.forEach(element => {
+
+              if (element.qr_status == true) {
                 this.flag = true;
                 let alert = this.alertCtrl.create({
-                  title: 'Valid User',
-                  subTitle: 'QRCode has been confirmed',
+                  title: 'QRCode has been checked already',
                   message: 'Username: ' + element.full_name,
                   buttons: [
                     {
                       text: 'Cancel',
                       role: 'cancel',
                       handler: () => {
-                        console.log('Cancel clicked');
+                        console.log('Cancel Button is clicked');
                       }
                     },
                     {
                       text: 'Scan Next',
                       handler: () => {
                         this.scan();
-                        console.log('Buy clicked');
+                        console.log('Scan Next Button is clicked');
                       }
                     }
                   ]
                 });
                 alert.present();
+              } else {
+                if (barcodeData.text == element.qrcode) {
+                  element.qr_status = true;
+                  this.passengerToUpdate.push(element.id);
+                  this.flag = true;
+                  let alert = this.alertCtrl.create({
+                    title: 'Valid User',
+                    subTitle: 'QRCode has been confirmed',
+                    message: 'Username: ' + element.full_name,
+                    buttons: [
+                      {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                          console.log('Cancel Button is clicked');
+                        }
+                      },
+                      {
+                        text: 'Scan Next',
+                        handler: () => {
+                          this.scan();
+                          console.log('Scan Next Button is clicked');
+                        }
+                      }
+                    ]
+                  });
+                  alert.present();
+                }
+
               }
-              
             });
-  
-            if(!this.flag){
+
+            if (!this.flag) {
               let alert = this.alertCtrl.create({
                 title: 'Invalid User',
                 message: 'The particular QRCode information is incorrect! ',
@@ -117,38 +146,33 @@ export class ScanPage {
               });
               alert.present();
             }
-  
+
           }
         });
       }
-    this.flag = false;
-    console.log("Passengers to update: "+this.passengerToUpdate);
-    localStorage.setItem('getAPI',JSON.stringify(this.passengerList));
-      
-    },(err) => {
+      this.flag = false;
+      console.log("Passengers to update: " + this.passengerToUpdate);
+      localStorage.setItem('list_schedules', JSON.stringify(this.passengerList));
+    }, (err) => {
       console.log(err);
     });
   }
 
   getPassenger() {
-    this.bpsi = localStorage.getItem('bus_per_schedule_id');
-    this.passengerList = JSON.parse(localStorage.getItem('getAPI'));
+    this.bpsi = localStorage.getItem('schedule_id');
+    this.passengerList = JSON.parse(localStorage.getItem('list_schedules'));
     this.passengerList.forEach(element => {
-      
-      if (element['bus_per_schedule_id'] == this.bpsi) {
-        this.passenger = element.passenger;
+
+      if (element['id'] == this.bpsi) {
+        this.passenger = element.passenger_list;
         console.log("Current Date: " + new Date().toLocaleDateString());
-        console.log("Date of travel: " + new Date(element['date_of_travel']).toLocaleDateString());
-        if(new Date(element['date_of_travel']).toLocaleDateString() == new Date().toLocaleDateString()){
-          if(localStorage.getItem(element['bus_per_schedule_id']+'ArriveButton')){
-            this.buttonScan = false;
-          }else{
-            this.buttonScan = true;
-          }
-          
+        console.log("Date of travel: " + new Date(element['dep_date']).toLocaleDateString());
+        if(new Date(element['dep_date']).toLocaleDateString() == new Date().toLocaleDateString()){
+          this.buttonScan = false;
+          console.log("Button Scan: "+ this.buttonScan);
         }
       }
-      
+
     });
   }
 }

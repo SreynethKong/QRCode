@@ -6,6 +6,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { HomePage } from '../pages/home/home';
+import { ScanPage } from '../pages/scan/scan';
 import { LoginPage } from '../pages/login/login';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
@@ -28,7 +29,7 @@ export class MyApp {
   };
   loading: Loading;
   checkData: any;
-  userInfo = { user_id: '', username: '', fullname: '', profile: '' };
+  userInfo = {  email:'', username: '', password: '', fullname: '', profile: '' };
 
   @ViewChild(Nav) nav: Nav
   constructor(
@@ -41,16 +42,17 @@ export class MyApp {
     private loadingCtrl: LoadingController,
     private auth: AuthServiceProvider
   ) {
+    // localStorage.clear();
     if (localStorage.getItem('authentication') == 'authenticated') {
       this.auth.credential = JSON.parse(localStorage.getItem('credential'));
       this.auth.update().subscribe(allowed => {
         if (allowed) {
-          if (this.auth.data.validity == 'valid') {
-            this.userInfo.user_id = this.auth.data.user_id;
+          if (this.auth.data.validity == true) {
+            this.userInfo.email = this.auth.data.email;
             this.userInfo.username = this.auth.data.username;
             this.userInfo.fullname = this.auth.data.fullname;
             this.userInfo.profile = this.auth.data.profile;
-            localStorage.setItem('getAPI', JSON.stringify(this.auth.data.data));
+            localStorage.setItem('list_schedules', JSON.stringify(this.auth.data.list_schedules));
             localStorage.setItem('credential', JSON.stringify(this.userInfo));
             this.auth.credential = JSON.parse(localStorage.getItem('credential'));
           } 
@@ -89,7 +91,13 @@ export class MyApp {
         }
         else {
           // go to previous page
-          this.nav.setRoot(HomePage);
+          if(localStorage.getItem('cancel_scan')=='true'){
+            this.nav.setRoot(ScanPage);
+            localStorage.removeItem('cancel_scan');
+          }else{
+            this.nav.setRoot(HomePage);
+          }
+          
         }
       });
       statusBar.styleDefault();
@@ -107,32 +115,26 @@ export class MyApp {
 
     this.auth.update().subscribe(allowed => {
       if (allowed) {
-        if (this.auth.data.validity == 'valid') {
-          if (this.auth.data.update == 'success') {
-            if (action == 'sync') {
-              this.userInfo.user_id = this.auth.data.user_id;
-              this.userInfo.username = this.auth.data.username;
-              this.userInfo.fullname = this.auth.data.fullname;
-              this.userInfo.profile = this.auth.data.profile;
-              localStorage.setItem('getAPI', JSON.stringify(this.auth.data.data));
-              localStorage.setItem('credential', JSON.stringify(this.userInfo));
-              this.auth.credential = JSON.parse(localStorage.getItem('credential'));
-              this.loading.dismiss();
-              alert("Synced to latest");
-              this.nav.setRoot(HomePage);
-            } else if (action == 'logout') {
-              localStorage.clear();
-              this.loading.dismiss();
-              this.nav.setRoot(LoginPage);
-            }
-          } else {
+        if (this.auth.data.update == 'success') {
+          if (action == 'sync') {
+            this.userInfo.email = this.auth.data.email;
+            this.userInfo.username = this.auth.data.username;
+            this.userInfo.fullname = this.auth.data.fullname;
+            this.userInfo.profile = this.auth.data.profile;
+            localStorage.setItem('list_schedules', JSON.stringify(this.auth.data.list_schedules));
+            localStorage.setItem('credential', JSON.stringify(this.userInfo));
+            this.auth.credential = JSON.parse(localStorage.getItem('credential'));
             this.loading.dismiss();
-            alert("Error Updation!");
+            alert("Synced to latest");
             this.nav.setRoot(HomePage);
+          } else if (action == 'logout') {
+            localStorage.clear();
+            this.loading.dismiss();
+            this.nav.setRoot(LoginPage);
           }
         } else {
           this.loading.dismiss();
-          alert("Error Authentication!");
+          alert("Error Updation!");
           this.nav.setRoot(HomePage);
         }
       }else{
@@ -146,7 +148,7 @@ export class MyApp {
   }
 
   checkReport() {
-    window.open('http://10.10.16.135:8080/shuttle-bus', '_self');
+    window.open('http://96.9.67.154:8081/shuttlebus', '_self');
   }
 
   public logOut() {

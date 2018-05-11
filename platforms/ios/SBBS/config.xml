@@ -41,10 +41,13 @@
     <feature name="BarcodeScanner">
         <param name="ios-package" value="CDVBarcodeScanner" />
     </feature>
+    <feature name="RareloopAppVersion">
+        <param name="ios-package" value="RareloopAppVersion" />
+    </feature>
     <name>SBBS</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.1.7:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
@@ -58,6 +61,7 @@
     <allow-navigation href="http://192.168.1.6:8101" />
     <allow-navigation href="http://192.168.30.2:8101" />
     <allow-navigation href="http://192.168.1.7:8100" />
+    <allow-navigation href="http://192.168.1.11:8101" />
     <allow-intent href="itms:*" />
     <allow-intent href="itms-apps:*" />
     <icon height="57" src="resources/ios/icon/icon.png" width="57" />

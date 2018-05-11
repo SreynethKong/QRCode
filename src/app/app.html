@@ -1,8 +1,8 @@
 <ion-menu id="myMenu" [content]="content" >
   <ion-header>
     <ion-toolbar text-center>
-      <img class="img-circle" src="{{auth.credential.profile}}">
-      <h3>{{auth.credential.fullname}}</h3>
+      <img class="img-circle" src="assets/img/profile_img.png">
+      <h3>{{auth.credential.username}}</h3>
     </ion-toolbar>
   </ion-header>
   <ion-content [ngStyle]="{'background':'#337ab7'}">
@@ -13,9 +13,9 @@
       <button ion-item (click)="syncToLatest('sync')" menuClose>
         <ion-icon name="sync" class="menuList"></ion-icon> Sync to Latest
       </button>
-      <button ion-item (click)="checkReport()" menuClose>
+      <!-- <button ion-item (click)="checkReport()" menuClose>
         <ion-icon name="document" class="menuList"></ion-icon> Check Reports
-      </button>
+      </button> -->
       <button ion-item (click)="logOut()" menuClose>
         <ion-icon name="log-out" class="menuList"></ion-icon> Log Out
       </button>

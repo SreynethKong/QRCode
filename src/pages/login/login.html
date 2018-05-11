@@ -6,43 +6,42 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <!-- <ion-navbar>
     <ion-title class="title">SBBS</ion-title>
-  </ion-navbar>
+  </ion-navbar> -->
 
 </ion-header>
 
 
 <ion-content padding>
 
-  <form novalidate (ngSubmit)="login(report)" [formGroup]="loginForm">
-
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input type="text" value="" formControlName="username" (keypress)="noSpace($event)"></ion-input>
+  <form class="login_form" padding novalidate (ngSubmit)="login(report)" [formGroup]="loginForm">
+    <img class="img-sign-in" src="assets/img/sign_in.png">
+    <h1 class="sign-in">Sign In</h1>
+    <ion-item no-lines class="login_field">
+      <ion-input type="email" value="" formControlName="email" placeholder="Email" (keypress)="noSpace($event)"></ion-input>
     </ion-item>
 
-    <div class="error" *ngIf="loginForm.get('username').value.toString() =='' && loginForm.get('username').hasError('required') && loginForm.get('username').touched">
+    <div class="error" *ngIf="loginForm.get('email').value.toString() =='' && loginForm.get('email').hasError('required') && loginForm.get('email').touched">
       *field is required
     </div>
-    <div class="error" *ngIf="loginForm.get('username').hasError('maxlength') && loginForm.get('username').touched">
-      *max length [30]
-    </div>
-    <div class="error" *ngIf="loginForm.get('username').value.toString() !='' && space">
+    <div class="error" *ngIf="loginForm.get('email').value.toString() !='' && space">
       *space is not allowed
     </div>
+    <div class="error" *ngIf="loginForm.get('email').value.toString() !='' && loginForm.get('email').hasError('email') && loginForm.get('email').touched">
+      *not valid
+    </div>
 
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input type="password" value="" formControlName="password"></ion-input>
+    <ion-item no-lines class="login_field">
+      <ion-input type="password" value="" formControlName="password" placeholder="Password"></ion-input>
     </ion-item>
 
     <div class="error" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
       *field is required
     </div>
 
-    <div padding>
-      <button ion-button block color="primary">Log In</button>
+    <div style="margin-top: 15px">
+      <button ion-button block color="primary">Login</button>
     </div>
   </form>
 

@@ -1,5 +1,12 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="RareloopAppVersion">
+        <param name="android-package" value="com.rareloop.cordova.appversion.RareloopAppVersion" />
+    </feature>
+    <feature name="AppUpdate">
+        <param name="android-package" value="com.vaenow.appupdate.android.CheckAppUpdate" />
+        <param name="onload" value="true" />
+    </feature>
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
@@ -44,6 +51,9 @@
     <allow-navigation href="http://172.16.0.87:8101" />
     <allow-navigation href="http://192.168.1.6:8101" />
     <allow-navigation href="http://192.168.30.2:8101" />
+    <allow-navigation href="http://192.168.1.7:8100" />
+    <allow-navigation href="http://192.168.1.11:8101" />
+    <allow-navigation href="http://172.16.0.9:8100" />
     <allow-intent href="market:*" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />

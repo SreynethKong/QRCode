@@ -38,6 +38,7 @@
 		6B41F5A14B314F9BAD17D842 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9758A8D08C0F40F5AA297D41 /* QuartzCore.framework */; };
 		A023E1B3C32B41EC9AD5A6BA /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7B56F0C8D174D5D9A7827B9 /* CoreImage.framework */; };
 		AF5A4C3280844F3996CD5A5F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EEC7876A6B543658A1AEAE9 /* AudioToolbox.framework */; };
+		74753E5DA69C48E08F1170BC /* RareloopAppVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BDA184262C4F539E6AFC50 /* RareloopAppVersion.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,8 @@
 		9758A8D08C0F40F5AA297D41 /* QuartzCore.framework */ = {isa = PBXFileReference; name = "QuartzCore.framework"; path = "System/Library/Frameworks/QuartzCore.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		A7B56F0C8D174D5D9A7827B9 /* CoreImage.framework */ = {isa = PBXFileReference; name = "CoreImage.framework"; path = "System/Library/Frameworks/CoreImage.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		0EEC7876A6B543658A1AEAE9 /* AudioToolbox.framework */ = {isa = PBXFileReference; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		F0BDA184262C4F539E6AFC50 /* RareloopAppVersion.m */ = {isa = PBXFileReference; name = "RareloopAppVersion.m"; path = "cordova-plugin-appversion/RareloopAppVersion.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		282BDDBC58D5486080EA8120 /* RareloopAppVersion.h */ = {isa = PBXFileReference; name = "RareloopAppVersion.h"; path = "cordova-plugin-appversion/RareloopAppVersion.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +258,8 @@
 				20219F979A634EAF8BC0A255 /* CDVBarcodeScanner.mm */,
 				0312E5D69D5D4D91A43D2048 /* zxing-all-in-one.cpp */,
 				4FE379D729CF4C29BA3B2CDB /* zxing-all-in-one.h */,
+				F0BDA184262C4F539E6AFC50 /* RareloopAppVersion.m */,
+				282BDDBC58D5486080EA8120 /* RareloopAppVersion.h */,
 			);
 			name = Plugins;
 			path = "SBBS/Plugins";
@@ -381,6 +386,7 @@
 				724D2B0F47244098BA1147F2 /* IonicKeyboard.m in Sources */,
 				1CDF54D0E8DD41CD9347D574 /* CDVBarcodeScanner.mm in Resources */,
 				1A030CE5852E46C49E483F8E /* zxing-all-in-one.cpp in Resources */,
+				74753E5DA69C48E08F1170BC /* RareloopAppVersion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

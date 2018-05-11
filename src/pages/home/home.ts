@@ -3,6 +3,7 @@ import { NavController, AlertController, ToastController } from 'ionic-angular';
 import { ScanPage } from '../scan/scan';
 import { ReportPage } from '../report/report';
 import { Http } from '@angular/http';
+import moment from 'moment';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class HomePage {
   disabled = {};
   checkDate = {};
   colors = ['#DDDDDD', '#A9CCE3', '#D7BDE2', '#E6B0AA', '#D6EAF8'];
+  
 
   constructor(
     public navCtrl: NavController,
@@ -28,12 +30,25 @@ export class HomePage {
   }
 
   getSchedules() {
-    this.scheduleList = JSON.parse(localStorage.getItem('getAPI'));
+    this.scheduleList = JSON.parse(localStorage.getItem('list_schedules'));
+    console.log("Date: "+new Date(this.scheduleList['dep_date']).toLocaleDateString());
   }
 
-  scan(bus_per_schedule_id) {
-    console.log("Bus Per Schedule ID: " + bus_per_schedule_id);
-    localStorage.setItem('bus_per_schedule_id', bus_per_schedule_id);
+  checkSchedule(){
+    let checkSchedule = this.scheduleList as any[];
+    if(checkSchedule.length == 0){
+      return true;
+    }
+    return false;
+  }
+
+  compareDate(dep_date){
+    return (new Date(dep_date).toLocaleDateString() == new Date().toLocaleDateString());
+  }
+
+  scan(schedule_id) {
+    console.log("Schedule ID: " + schedule_id);
+    localStorage.setItem('schedule_id', schedule_id);
     this.navCtrl.setRoot(ScanPage);
   }
 
@@ -109,31 +124,36 @@ export class HomePage {
       });
   }
 
+  formatDate(date){
+    
+    return moment(date).format("ddd,l");
+  }
+
   check() {
-    this.scheduleList.forEach(element => {
-      if (new Date(element['date_of_travel']).toLocaleDateString() == new Date().toLocaleDateString()) {
-        this.checkDate[element.bus_per_schedule_id + 'CheckDate'] = true;
-        if (localStorage.getItem(element.bus_per_schedule_id + 'LeaveButton') == null && localStorage.getItem(element.bus_per_schedule_id + 'ArriveButton') == null) {
-          this.disabled[element.bus_per_schedule_id + 'LeaveButton'] = false;
-          this.disabled[element.bus_per_schedule_id + 'ArriveButton'] = true;
-          this.disabled[element.bus_per_schedule_id + 'ShowReportButton'] = false;
-        }
-        else if (localStorage.getItem(element.bus_per_schedule_id + 'LeaveButton') == 'left') {
-          this.disabled[element.bus_per_schedule_id + 'LeaveButton'] = true;
-          this.disabled[element.bus_per_schedule_id + 'ArriveButton'] = false;
-          this.disabled[element.bus_per_schedule_id + 'ShowReportButton'] = false;
-        }
-        if (localStorage.getItem(element.bus_per_schedule_id + 'ArriveButton') == 'arrived') {
-          this.disabled[element.bus_per_schedule_id + 'ArriveButton'] = true;
-          this.disabled[element.bus_per_schedule_id + 'ShowReportButton'] = true;
-          this.disabled[element.bus_per_schedule_id + 'DisableReportButton'] = false;
-        }
-        if (localStorage.getItem(element.bus_per_schedule_id + 'DisableReportButton') == 'reported') {
-          this.disabled[element.bus_per_schedule_id + 'DisableReportButton'] = true;
-        }
-      } else {
-        this.checkDate[element.bus_per_schedule_id + 'CheckDate'] = false;
-      }
-    });
+    // this.scheduleList.forEach(element => {
+    //   if (new Date(element['date_of_travel']).toLocaleDateString() == new Date().toLocaleDateString()) {
+    //     this.checkDate[element.bus_per_schedule_id + 'CheckDate'] = true;
+    //     if (localStorage.getItem(element.bus_per_schedule_id + 'LeaveButton') == null && localStorage.getItem(element.bus_per_schedule_id + 'ArriveButton') == null) {
+    //       this.disabled[element.bus_per_schedule_id + 'LeaveButton'] = false;
+    //       this.disabled[element.bus_per_schedule_id + 'ArriveButton'] = true;
+    //       this.disabled[element.bus_per_schedule_id + 'ShowReportButton'] = false;
+    //     }
+    //     else if (localStorage.getItem(element.bus_per_schedule_id + 'LeaveButton') == 'left') {
+    //       this.disabled[element.bus_per_schedule_id + 'LeaveButton'] = true;
+    //       this.disabled[element.bus_per_schedule_id + 'ArriveButton'] = false;
+    //       this.disabled[element.bus_per_schedule_id + 'ShowReportButton'] = false;
+    //     }
+    //     if (localStorage.getItem(element.bus_per_schedule_id + 'ArriveButton') == 'arrived') {
+    //       this.disabled[element.bus_per_schedule_id + 'ArriveButton'] = true;
+    //       this.disabled[element.bus_per_schedule_id + 'ShowReportButton'] = true;
+    //       this.disabled[element.bus_per_schedule_id + 'DisableReportButton'] = false;
+    //     }
+    //     if (localStorage.getItem(element.bus_per_schedule_id + 'DisableReportButton') == 'reported') {
+    //       this.disabled[element.bus_per_schedule_id + 'DisableReportButton'] = true;
+    //     }
+    //   } else {
+    //     this.checkDate[element.bus_per_schedule_id + 'CheckDate'] = false;
+    //   }
+    // });
   }
 }
