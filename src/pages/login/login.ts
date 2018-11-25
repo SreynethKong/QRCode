@@ -34,6 +34,7 @@ export class LoginPage {
   loading: Loading;
   loginForm: FormGroup;
   space = false;
+  submitAttempt: boolean = false;
   registerCredentials = { email: '', password: ''};
 
   ionViewDidLoad() {
@@ -49,7 +50,7 @@ export class LoginPage {
   ngOnInit() {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required,Validators.email]),
-      password: new FormControl('', [Validators.required])
+      password: new FormControl('', [Validators.required,Validators.minLength(8),Validators.maxLength(30)])
     });
 
   }
@@ -64,6 +65,8 @@ export class LoginPage {
   }
 
   public login() {
+    this.submitAttempt= true;
+    localStorage.clear();
     this.registerCredentials.email = this.loginForm.get('email').value;
     this.registerCredentials.password = this.loginForm.get('password').value;
     console.log(this.loginForm.get('email').value);

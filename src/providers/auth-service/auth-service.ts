@@ -36,7 +36,7 @@ export class AuthServiceProvider {
       return Observable.create(observer => {
         // At this point make a request to your backend to make a real check!
 
-        this.http.get('http://188.166.173.225:8080/sbs/checkValidity?email=' + credentials.email + '&&password=' + credentials.password).map(res => res.json()).subscribe(data => {
+        this.http.get('http://shuttlebus.vkirirom.com/checkValidity?email=' + credentials.email + '&&password=' + credentials.password).map(res => res.json()).subscribe(data => {
           console.log(data);
           if (data.validity == true) {
             data.list_schedules.forEach(element => {
@@ -115,7 +115,7 @@ export class AuthServiceProvider {
       let headers = new Headers();
       headers.append('data', JSON.stringify(this.passengerToUpdate));
       // headers.append('report', JSON.stringify(this.reportToUpdate));
-      this.http.get('http://188.166.173.225:8080/sbs/updatePassenger?email=' + credential.email, { headers: headers })
+      this.http.get('http://shuttlebus.vkirirom.com/updatePassenger?email=' + credential.email, { headers: headers })
         .map(res => res.json())
         .subscribe(data => {
           console.log(data.update);

@@ -42,7 +42,7 @@ export class MyApp {
     private loadingCtrl: LoadingController,
     private auth: AuthServiceProvider
   ) {
-    // localStorage.clear();
+    localStorage.clear();
     if (localStorage.getItem('authentication') == 'authenticated') {
       this.auth.credential = JSON.parse(localStorage.getItem('credential'));
       this.auth.update().subscribe(allowed => {
@@ -148,7 +148,7 @@ export class MyApp {
   }
 
   checkReport() {
-    window.open('http://96.9.67.154:8081/shuttlebus', '_self');
+    // window.open('http://96.9.67.154:8081/shuttlebus', '_self');
   }
 
   public logOut() {

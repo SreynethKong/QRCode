@@ -97,6 +97,14 @@ module.exports = [
         "clobbers": [
             "AppUpdate"
         ]
+    },
+    {
+        "id": "mx.ferreyra.callnumber.CallNumber",
+        "file": "plugins/mx.ferreyra.callnumber/www/CallNumber.js",
+        "pluginId": "mx.ferreyra.callnumber",
+        "clobbers": [
+            "call"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -114,7 +122,8 @@ module.exports.metadata =
     "phonegap-plugin-barcodescanner": "6.0.8",
     "cordova-plugin-appversion": "1.0.0",
     "cordova-plugin-app-update": "1.6.0",
-    "cordova-plugin-compat": "1.2.0"
+    "cordova-plugin-compat": "1.2.0",
+    "mx.ferreyra.callnumber": "0.0.2"
 };
 // BOTTOM OF METADATA
 });

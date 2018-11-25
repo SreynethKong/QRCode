@@ -22,6 +22,9 @@
       <ion-input type="email" value="" formControlName="email" placeholder="Email" (keypress)="noSpace($event)"></ion-input>
     </ion-item>
 
+    <div class="error" *ngIf="!loginForm.get('email').touched && submitAttempt">
+      *field is required
+    </div>
     <div class="error" *ngIf="loginForm.get('email').value.toString() =='' && loginForm.get('email').hasError('required') && loginForm.get('email').touched">
       *field is required
     </div>
@@ -36,8 +39,17 @@
       <ion-input type="password" value="" formControlName="password" placeholder="Password"></ion-input>
     </ion-item>
 
+    <div class="error" *ngIf="!loginForm.get('password').touched && submitAttempt">
+      *field is required
+    </div>
     <div class="error" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
       *field is required
+    </div>
+    <div class="error" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('minlength')">
+      *password must be at least 8 characters long
+    </div>
+    <div class="error" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('maxlength')">
+      *password maximum of 30 characters
     </div>
 
     <div style="margin-top: 15px">

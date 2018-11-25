@@ -39,6 +39,7 @@
 		A023E1B3C32B41EC9AD5A6BA /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7B56F0C8D174D5D9A7827B9 /* CoreImage.framework */; };
 		AF5A4C3280844F3996CD5A5F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EEC7876A6B543658A1AEAE9 /* AudioToolbox.framework */; };
 		74753E5DA69C48E08F1170BC /* RareloopAppVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BDA184262C4F539E6AFC50 /* RareloopAppVersion.m */; };
+		8D0B936254464E869048BC71 /* CFCallNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D89990412FC44AEBEF8F43C /* CFCallNumber.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,8 @@
 		0EEC7876A6B543658A1AEAE9 /* AudioToolbox.framework */ = {isa = PBXFileReference; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		F0BDA184262C4F539E6AFC50 /* RareloopAppVersion.m */ = {isa = PBXFileReference; name = "RareloopAppVersion.m"; path = "cordova-plugin-appversion/RareloopAppVersion.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
 		282BDDBC58D5486080EA8120 /* RareloopAppVersion.h */ = {isa = PBXFileReference; name = "RareloopAppVersion.h"; path = "cordova-plugin-appversion/RareloopAppVersion.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		9D89990412FC44AEBEF8F43C /* CFCallNumber.m */ = {isa = PBXFileReference; name = "CFCallNumber.m"; path = "mx.ferreyra.callnumber/CFCallNumber.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		2AFCC6F9714B4E7A920CF3E8 /* CFCallNumber.h */ = {isa = PBXFileReference; name = "CFCallNumber.h"; path = "mx.ferreyra.callnumber/CFCallNumber.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +263,8 @@
 				4FE379D729CF4C29BA3B2CDB /* zxing-all-in-one.h */,
 				F0BDA184262C4F539E6AFC50 /* RareloopAppVersion.m */,
 				282BDDBC58D5486080EA8120 /* RareloopAppVersion.h */,
+				9D89990412FC44AEBEF8F43C /* CFCallNumber.m */,
+				2AFCC6F9714B4E7A920CF3E8 /* CFCallNumber.h */,
 			);
 			name = Plugins;
 			path = "SBBS/Plugins";
@@ -387,6 +392,7 @@
 				1CDF54D0E8DD41CD9347D574 /* CDVBarcodeScanner.mm in Resources */,
 				1A030CE5852E46C49E483F8E /* zxing-all-in-one.cpp in Resources */,
 				74753E5DA69C48E08F1170BC /* RareloopAppVersion.m in Sources */,
+				8D0B936254464E869048BC71 /* CFCallNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

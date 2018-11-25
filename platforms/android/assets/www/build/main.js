@@ -7,7 +7,7 @@ webpackJsonp([3],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ReportPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(32);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -210,7 +210,7 @@ ReportPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_service_auth_service__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__(13);
@@ -248,6 +248,7 @@ var LoginPage = (function () {
         this.email = '';
         this.password = '';
         this.space = false;
+        this.submitAttempt = false;
         this.registerCredentials = { email: '', password: '' };
     }
     LoginPage.prototype.ionViewDidLoad = function () {
@@ -261,7 +262,7 @@ var LoginPage = (function () {
     LoginPage.prototype.ngOnInit = function () {
         this.loginForm = new __WEBPACK_IMPORTED_MODULE_5__angular_forms__["b" /* FormGroup */]({
             email: new __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormControl */]('', [__WEBPACK_IMPORTED_MODULE_5__angular_forms__["g" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_5__angular_forms__["g" /* Validators */].email]),
-            password: new __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormControl */]('', [__WEBPACK_IMPORTED_MODULE_5__angular_forms__["g" /* Validators */].required])
+            password: new __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormControl */]('', [__WEBPACK_IMPORTED_MODULE_5__angular_forms__["g" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_5__angular_forms__["g" /* Validators */].minLength(8), __WEBPACK_IMPORTED_MODULE_5__angular_forms__["g" /* Validators */].maxLength(30)])
         });
     };
     LoginPage.prototype.noSpace = function (event) {
@@ -274,6 +275,8 @@ var LoginPage = (function () {
     };
     LoginPage.prototype.login = function () {
         var _this = this;
+        this.submitAttempt = true;
+        localStorage.clear();
         this.registerCredentials.email = this.loginForm.get('email').value;
         this.registerCredentials.password = this.loginForm.get('password').value;
         console.log(this.loginForm.get('email').value);
@@ -332,7 +335,7 @@ var LoginPage = (function () {
 LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-login',template:/*ion-inline-start:"/Users/MacBook/QRCode/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <!-- <ion-navbar>\n    <ion-title class="title">SBBS</ion-title>\n  </ion-navbar> -->\n\n</ion-header>\n\n\n<ion-content padding>\n\n  <form class="login_form" padding novalidate (ngSubmit)="login(report)" [formGroup]="loginForm">\n    <img class="img-sign-in" src="assets/img/sign_in.png">\n    <h1 class="sign-in">Sign In</h1>\n    <ion-item no-lines class="login_field">\n      <ion-input type="email" value="" formControlName="email" placeholder="Email" (keypress)="noSpace($event)"></ion-input>\n    </ion-item>\n\n    <div class="error" *ngIf="loginForm.get(\'email\').value.toString() ==\'\' && loginForm.get(\'email\').hasError(\'required\') && loginForm.get(\'email\').touched">\n      *field is required\n    </div>\n    <div class="error" *ngIf="loginForm.get(\'email\').value.toString() !=\'\' && space">\n      *space is not allowed\n    </div>\n    <div class="error" *ngIf="loginForm.get(\'email\').value.toString() !=\'\' && loginForm.get(\'email\').hasError(\'email\') && loginForm.get(\'email\').touched">\n      *not valid\n    </div>\n\n    <ion-item no-lines class="login_field">\n      <ion-input type="password" value="" formControlName="password" placeholder="Password"></ion-input>\n    </ion-item>\n\n    <div class="error" *ngIf="loginForm.get(\'password\').hasError(\'required\') && loginForm.get(\'password\').touched">\n      *field is required\n    </div>\n\n    <div style="margin-top: 15px">\n      <button ion-button block color="primary">Login</button>\n    </div>\n  </form>\n\n</ion-content>'/*ion-inline-end:"/Users/MacBook/QRCode/src/pages/login/login.html"*/,
+        selector: 'page-login',template:/*ion-inline-start:"/Users/MacBook/QRCode/src/pages/login/login.html"*/'<!--\n  Generated template for the LoginPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <!-- <ion-navbar>\n    <ion-title class="title">SBBS</ion-title>\n  </ion-navbar> -->\n\n</ion-header>\n\n\n<ion-content padding>\n\n  <form class="login_form" padding novalidate (ngSubmit)="login(report)" [formGroup]="loginForm">\n    <img class="img-sign-in" src="assets/img/sign_in.png">\n    <h1 class="sign-in">Sign In</h1>\n    <ion-item no-lines class="login_field">\n      <ion-input type="email" value="" formControlName="email" placeholder="Email" (keypress)="noSpace($event)"></ion-input>\n    </ion-item>\n\n    <div class="error" *ngIf="!loginForm.get(\'email\').touched && submitAttempt">\n      *field is required\n    </div>\n    <div class="error" *ngIf="loginForm.get(\'email\').value.toString() ==\'\' && loginForm.get(\'email\').hasError(\'required\') && loginForm.get(\'email\').touched">\n      *field is required\n    </div>\n    <div class="error" *ngIf="loginForm.get(\'email\').value.toString() !=\'\' && space">\n      *space is not allowed\n    </div>\n    <div class="error" *ngIf="loginForm.get(\'email\').value.toString() !=\'\' && loginForm.get(\'email\').hasError(\'email\') && loginForm.get(\'email\').touched">\n      *not valid\n    </div>\n\n    <ion-item no-lines class="login_field">\n      <ion-input type="password" value="" formControlName="password" placeholder="Password"></ion-input>\n    </ion-item>\n\n    <div class="error" *ngIf="!loginForm.get(\'password\').touched && submitAttempt">\n      *field is required\n    </div>\n    <div class="error" *ngIf="loginForm.get(\'password\').hasError(\'required\') && loginForm.get(\'password\').touched">\n      *field is required\n    </div>\n    <div class="error" *ngIf="loginForm.get(\'password\').touched && loginForm.get(\'password\').hasError(\'minlength\')">\n      *password must be at least 8 characters long\n    </div>\n    <div class="error" *ngIf="loginForm.get(\'password\').touched && loginForm.get(\'password\').hasError(\'maxlength\')">\n      *password maximum of 30 characters\n    </div>\n\n    <div style="margin-top: 15px">\n      <button ion-button block color="primary">Login</button>\n    </div>\n  </form>\n\n</ion-content>'/*ion-inline-end:"/Users/MacBook/QRCode/src/pages/login/login.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
@@ -369,15 +372,15 @@ webpackEmptyAsyncContext.id = 115;
 
 var map = {
 	"../pages/login/login.module": [
-		402,
+		403,
 		2
 	],
 	"../pages/report/report.module": [
-		401,
+		402,
 		1
 	],
 	"../pages/scan/scan.module": [
-		400,
+		401,
 		0
 	]
 };
@@ -397,13 +400,13 @@ module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 325:
+/***/ 326:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(326);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(327);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(344);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -411,7 +414,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 343:
+/***/ 344:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -419,24 +422,26 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(393);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_scan_scan__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_report_report__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_barcode_scanner__ = __webpack_require__(158);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_http__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(395);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_auth_service_auth_service__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_network__ = __webpack_require__(398);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_network__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_call_number__ = __webpack_require__(283);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -490,6 +495,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
             __WEBPACK_IMPORTED_MODULE_10__ionic_native_barcode_scanner__["a" /* BarcodeScanner */],
+            __WEBPACK_IMPORTED_MODULE_15__ionic_native_call_number__["a" /* CallNumber */],
             { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicErrorHandler */] },
             __WEBPACK_IMPORTED_MODULE_13__providers_auth_service_auth_service__["a" /* AuthServiceProvider */],
             __WEBPACK_IMPORTED_MODULE_14__ionic_native_network__["a" /* Network */]
@@ -501,7 +507,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 375:
+/***/ 376:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -766,23 +772,23 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 375;
+webpackContext.id = 376;
 
 /***/ }),
 
-/***/ 393:
+/***/ 394:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(323);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(324);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_scan_scan__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_auth_service_auth_service__ = __webpack_require__(83);
@@ -928,7 +934,7 @@ var MyApp = (function () {
         });
     };
     MyApp.prototype.checkReport = function () {
-        window.open('http://96.9.67.154:8081/shuttlebus', '_self');
+        // window.open('http://96.9.67.154:8081/shuttlebus', '_self');
     };
     MyApp.prototype.logOut = function () {
         var _this = this;
@@ -965,7 +971,7 @@ MyApp = __decorate([
 
 /***/ }),
 
-/***/ 41:
+/***/ 42:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1126,7 +1132,7 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"/Users/MacBook/QRCode/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title class="title">\n      Shuttle Bus Schedules\n    </ion-title>\n    <button ion-button large left menuToggle [ngStyle]="{\'background\':\'none\'}">\n      <ion-icon name="menu" class="menuToggle"></ion-icon>\n    </button>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="no-data" *ngIf="checkSchedule()">\n    <img class="no-data" src="assets/img/no_data.png">\n    <h1 class="no-data-text">You have NO upcoming schedules!</h1>\n  </div>\n  \n  <ion-list no-lines>\n    <ion-card no-padding *ngFor="let schedule of scheduleList;let i = index" [ngStyle]="{\'margin-bottom\':\'10px\', \'background\' : \'white\'}">\n      <ion-card-header>\n        <h1>{{schedule.des_from}} - {{schedule.des_to}}<p item-end class="today" *ngIf="compareDate(schedule.dep_date)">Today</p></h1>\n        \n        <!-- {{schedule.dep_date}}<p item-end class="today" *ngIf="compareDate(schedule.dep_date)">TODAY</p> -->\n        \n      </ion-card-header>\n      <ion-card-content>\n        <ion-grid no-padding>\n          <ion-row>\n            <ion-col>\n                <ion-row>\n                    <ion-col class="column-left">\n                        <div>Departure Date</div>\n                        <h2> {{formatDate(schedule.dep_date)}} </h2>\n                        \n                    </ion-col>\n                  </ion-row>\n                  <ion-row>\n                      <ion-col class="column-left">\n                          <div>Departure Time</div>\n                          <h2> {{schedule.dep_time}} </h2>\n                      </ion-col>\n                  </ion-row>\n                  <ion-row >\n                      <ion-col class="column-left">\n                        <div>Arrival Time</div>\n                      <h2 style="padding-bottom: 2px !important"> {{schedule.dep_time}} </h2>\n                      </ion-col>\n                    </ion-row>\n            </ion-col>\n            <ion-col>\n              <ion-row>\n                <ion-col class="column-right" no-padding>\n                  <ion-item class="number">Customer: <h2 item-end>{{schedule.customer}}</h2></ion-item>\n                    \n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col class="column-right" no-padding>\n                    <ion-item class="number">Student: <h2 item-end>{{schedule.student}}</h2></ion-item>\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                  <ion-col class="column-right" no-padding>\n                      <ion-item class="number">Staff: <h2 item-end>{{schedule.staff}}</h2></ion-item>\n                  </ion-col>\n                </ion-row>\n                <ion-row>\n                    <ion-col class="column-right" no-padding>\n                        <ion-item class="number">Total: <h2 item-end>{{schedule.customer+schedule.student+schedule.staff}}</h2></ion-item>\n                        \n                    </ion-col>\n                  </ion-row>\n\n              \n            </ion-col>\n          </ion-row>\n\n          <!-- <ion-row *ngIf="checkDate[(schedule.bus_per_schedule_id)+\'CheckDate\']">\n            <ion-col class="confirm">\n              <button ion-button outline block class="left" color="dark" [disabled]="disabled[(schedule.bus_per_schedule_id)+\'LeaveButton\']" (click)="leave(schedule.bus_per_schedule_id)">Leave</button>\n            </ion-col>\n            <ion-col class="confirm">\n              <button ion-button outline block class="right" color="dark" [disabled]="disabled[(schedule.bus_per_schedule_id)+\'ArriveButton\']" (click)="arrive(schedule.bus_per_schedule_id)">Arrive</button>\n            </ion-col>\n          </ion-row> -->\n        </ion-grid>\n        \n        <!-- <button ion-button icon-only block round (click)="report(schedule.bus_per_schedule_id)" *ngIf="disabled[(schedule.bus_per_schedule_id)+\'ShowReportButton\']" [disabled]="disabled[(schedule.bus_per_schedule_id)+\'DisableReportButton\']">\n          Fill Out Report\n        </button> -->\n        <button ion-button icon-only block (click)="scan(schedule.id)" style="margin-top: 1px !important">\n          Check Passenger\n        </button>\n      </ion-card-content>\n    </ion-card>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/MacBook/QRCode/src/pages/home/home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"/Users/MacBook/QRCode/src/pages/home/home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title class="title">\n      Shuttle Bus Schedules\n    </ion-title>\n    <button ion-button large left menuToggle [ngStyle]="{\'background\':\'none\'}">\n      <ion-icon name="menu" class="menuToggle"></ion-icon>\n    </button>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="no-data" *ngIf="checkSchedule()">\n    <img class="no-data" src="assets/img/no_data.png">\n    <h1 class="no-data-text">You have NO upcoming schedules!</h1>\n  </div>\n  \n  <ion-list no-lines>\n    <ion-card no-padding *ngFor="let schedule of scheduleList;let i = index" [ngStyle]="{\'margin-bottom\':\'10px\', \'background\' : \'white\'}">\n      <ion-card-header>\n        <h1>{{schedule.des_from}} - {{schedule.des_to}}<p item-end class="today" *ngIf="compareDate(schedule.dep_date)">Today</p></h1>\n        \n        <!-- {{schedule.dep_date}}<p item-end class="today" *ngIf="compareDate(schedule.dep_date)">TODAY</p> -->\n        \n      </ion-card-header>\n      <ion-card-content>\n        <ion-grid no-padding>\n          <ion-row>\n            <ion-col>\n                <ion-row>\n                    <ion-col class="column-left">\n                        <div>Departure Date</div>\n                        <h2> {{formatDate(schedule.dep_date)}} </h2>\n                        \n                    </ion-col>\n                  </ion-row>\n                  <ion-row>\n                      <ion-col class="column-left">\n                          <div>Departure Time</div>\n                          <h2> {{schedule.dep_time}} </h2>\n                      </ion-col>\n                  </ion-row>\n                  <ion-row >\n                      <ion-col class="column-left">\n                        <div>Remaining Seats</div>\n                      <h2 style="padding-bottom: 2px !important"> {{schedule.remaining_seats}} </h2>\n                      </ion-col>\n                    </ion-row>\n            </ion-col>\n            <ion-col>\n              <ion-row>\n                <ion-col class="column-right" no-padding>\n                  <ion-item class="number">Customer: <h2 item-end>{{schedule.customer}}</h2></ion-item>\n                    \n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col class="column-right" no-padding>\n                    <ion-item class="number">Student: <h2 item-end>{{schedule.student}}</h2></ion-item>\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                  <ion-col class="column-right" no-padding>\n                      <ion-item class="number">Staff: <h2 item-end>{{schedule.staff}}</h2></ion-item>\n                  </ion-col>\n                </ion-row>\n                <ion-row>\n                    <ion-col class="column-right" no-padding>\n                        <ion-item class="number">Total: <h2 item-end>{{schedule.no_of_booking}}</h2></ion-item>\n                        \n                    </ion-col>\n                  </ion-row>\n\n              \n            </ion-col>\n          </ion-row>\n\n          <!-- <ion-row *ngIf="checkDate[(schedule.bus_per_schedule_id)+\'CheckDate\']">\n            <ion-col class="confirm">\n              <button ion-button outline block class="left" color="dark" [disabled]="disabled[(schedule.bus_per_schedule_id)+\'LeaveButton\']" (click)="leave(schedule.bus_per_schedule_id)">Leave</button>\n            </ion-col>\n            <ion-col class="confirm">\n              <button ion-button outline block class="right" color="dark" [disabled]="disabled[(schedule.bus_per_schedule_id)+\'ArriveButton\']" (click)="arrive(schedule.bus_per_schedule_id)">Arrive</button>\n            </ion-col>\n          </ion-row> -->\n        </ion-grid>\n        \n        <!-- <button ion-button icon-only block round (click)="report(schedule.bus_per_schedule_id)" *ngIf="disabled[(schedule.bus_per_schedule_id)+\'ShowReportButton\']" [disabled]="disabled[(schedule.bus_per_schedule_id)+\'DisableReportButton\']">\n          Fill Out Report\n        </button> -->\n        <button ion-button icon-only block (click)="scan(schedule.id)" style="margin-top: 1px !important">\n          Check Passenger\n        </button>\n      </ion-card-content>\n    </ion-card>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/MacBook/QRCode/src/pages/home/home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
@@ -1146,7 +1152,8 @@ HomePage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_call_number__ = __webpack_require__(283);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1161,6 +1168,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the ScanPage page.
  *
@@ -1168,12 +1176,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * on Ionic pages and navigation.
  */
 var ScanPage = (function () {
-    function ScanPage(navCtrl, navParams, barcodeScanner, alertCtrl, toastCtrl) {
+    function ScanPage(navCtrl, navParams, barcodeScanner, alertCtrl, toastCtrl, callNumber) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.barcodeScanner = barcodeScanner;
         this.alertCtrl = alertCtrl;
         this.toastCtrl = toastCtrl;
+        this.callNumber = callNumber;
         this.bpsi = '';
         this.passengerToUpdate = [];
         this.flag = false;
@@ -1309,18 +1318,55 @@ var ScanPage = (function () {
             }
         });
     };
+    ScanPage.prototype.showInfo = function (phone_num, username) {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: 'Contact : ' + username,
+            message: 'Phone Number: ' + phone_num,
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: function () {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Call',
+                    handler: function () {
+                        console.log('Call clicked');
+                        if (phone_num == null) {
+                            var alert_4 = _this.alertCtrl.create({
+                                title: 'Cannot Call',
+                                subTitle: 'No phone number info',
+                                buttons: ['Dismiss']
+                            });
+                            alert_4.present();
+                        }
+                        else {
+                            _this.callNumber.callNumber(phone_num, true)
+                                .then(function (res) { return console.log('Launched dialer!', res); })
+                                .catch(function (err) { return console.log('Error launching dialer', err); });
+                        }
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
     return ScanPage;
 }());
 ScanPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-scan',template:/*ion-inline-start:"/Users/MacBook/QRCode/src/pages/scan/scan.html"*/'<!--\n  Generated template for the ScanPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-buttons left>\n      <button ion-button icon-only (click)="home()">\n        <ion-icon name="arrow-round-back"></ion-icon>\n      </button>\n    </ion-buttons>\n\n    <ion-title class="title">Scan QRCode</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div padding>\n    <button ion-button large color="primary" block [disabled]="buttonSca" (click)="scan()"  >\n      <ion-icon name="qr-scanner"> Scan QRCode</ion-icon>\n    </button>\n  </div>\n\n  <ion-list>\n    <h2>List of Passengers</h2>\n    <ion-grid >\n      <ion-row>\n        <ion-col col-7 class="col-header">\n          Name\n        </ion-col>\n        <ion-col class="col-header">\n          Seats\n        </ion-col>\n        <ion-col col-2 class="col-header">\n          Status\n        </ion-col>\n      </ion-row>\n      <ion-row *ngFor="let passenger of passenger; let i = index">\n        <ion-col col-7 class="col-content-name">\n          {{i+1}}. {{passenger.full_name}}\n        </ion-col>\n        <ion-col class="col-content">\n          {{passenger.no_of_booking}}\n        </ion-col>\n        <ion-col col-2 class="col-content">\n          <ion-icon item-end [ngStyle]="{\'color\':\'green\'}" name="checkmark-circle" *ngIf="(passenger.qr_status)==true"></ion-icon>\n          <ion-icon item-end [ngStyle]="{\'color\':\'red\'}" name="close-circle" *ngIf="(passenger.qr_status)==false"></ion-icon>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n    <!-- <ion-item *ngFor="let passenger of passenger; let i = index">\n      {{i+1}}. {{passenger.full_name}} {{passenger.no_of_booking}}\n      <ion-icon item-end [ngStyle]="{\'color\':\'green\'}" name="checkmark-circle" *ngIf="(passenger.qr_status)==false"></ion-icon>\n    </ion-item> -->\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/MacBook/QRCode/src/pages/scan/scan.html"*/,
+        selector: 'page-scan',template:/*ion-inline-start:"/Users/MacBook/QRCode/src/pages/scan/scan.html"*/'<!--\n  Generated template for the ScanPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-buttons left>\n      <button ion-button icon-only (click)="home()">\n        <ion-icon name="arrow-round-back"></ion-icon>\n      </button>\n    </ion-buttons>\n\n    <ion-title class="title">Scan QRCode</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div padding>\n    <button ion-button large color="primary" block [disabled]="buttonSca" (click)="scan()"  >\n      <ion-icon name="qr-scanner"> Scan QRCode</ion-icon>\n    </button>\n  </div>\n\n  <ion-list>\n    <h2>List of Passengers</h2>\n    <ion-grid >\n      <ion-row>\n        <ion-col col-6 class="col-header">\n          Name\n        </ion-col>\n        <ion-col class="col-header">\n          Seats\n        </ion-col>\n        <ion-col col-2 class="col-header">\n          Status\n        </ion-col>\n        <ion-col col-2 class="col-header">\n          Info\n        </ion-col>\n      </ion-row>\n      <ion-row *ngFor="let passenger of passenger; let i = index">\n        <ion-col col-6 class="col-content-name">\n          {{i+1}}. {{passenger.user_name}}\n        </ion-col>\n        <ion-col class="col-content">\n          {{passenger.no_of_booking}}\n        </ion-col>\n        \n        <ion-col col-2 class="col-content">\n          <ion-icon item-end [ngStyle]="{\'color\':\'green\'}" name="checkmark-circle" *ngIf="(passenger.qr_status)==true"></ion-icon>\n          <ion-icon item-end [ngStyle]="{\'color\':\'red\'}" name="close-circle" *ngIf="(passenger.qr_status)==false"></ion-icon>\n        </ion-col>\n        <ion-col col-2 class="col-content">\n          <ion-icon name="information-circle" (click)="showInfo(passenger.phone, passenger.user_name)"></ion-icon>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n    <!-- <ion-item *ngFor="let passenger of passenger; let i = index">\n      {{i+1}}. {{passenger.full_name}} {{passenger.no_of_booking}}\n      <ion-icon item-end [ngStyle]="{\'color\':\'green\'}" name="checkmark-circle" *ngIf="(passenger.qr_status)==false"></ion-icon>\n    </ion-item> -->\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/MacBook/QRCode/src/pages/scan/scan.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_2__ionic_native_barcode_scanner__["a" /* BarcodeScanner */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */]])
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ToastController */],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_native_call_number__["a" /* CallNumber */]])
 ], ScanPage);
 
 //# sourceMappingURL=scan.js.map
@@ -1336,7 +1382,7 @@ ScanPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(284);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1378,7 +1424,7 @@ var AuthServiceProvider = (function () {
         else {
             return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"].create(function (observer) {
                 // At this point make a request to your backend to make a real check!
-                _this.http.get('http://188.166.173.225:8080/sbs/checkValidity?email=' + credentials.email + '&&password=' + credentials.password).map(function (res) { return res.json(); }).subscribe(function (data) {
+                _this.http.get('http://shuttlebus.vkirirom.com/checkValidity?email=' + credentials.email + '&&password=' + credentials.password).map(function (res) { return res.json(); }).subscribe(function (data) {
                     console.log(data);
                     if (data.validity == true) {
                         data.list_schedules.forEach(function (element) {
@@ -1453,7 +1499,7 @@ var AuthServiceProvider = (function () {
             var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
             headers.append('data', JSON.stringify(_this.passengerToUpdate));
             // headers.append('report', JSON.stringify(this.reportToUpdate));
-            _this.http.get('http://188.166.173.225:8080/sbs/updatePassenger?email=' + credential.email, { headers: headers })
+            _this.http.get('http://shuttlebus.vkirirom.com/updatePassenger?email=' + credential.email, { headers: headers })
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 console.log(data.update);
@@ -1482,5 +1528,5 @@ AuthServiceProvider = __decorate([
 
 /***/ })
 
-},[325]);
+},[326]);
 //# sourceMappingURL=main.js.map

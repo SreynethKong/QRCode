@@ -15,6 +15,7 @@ import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { Network } from '@ionic-native/network';
+import { CallNumber } from '@ionic-native/call-number';
 
 
 
@@ -44,6 +45,7 @@ import { Network } from '@ionic-native/network';
     StatusBar,
     SplashScreen,
     BarcodeScanner,
+    CallNumber,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     Network

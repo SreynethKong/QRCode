@@ -42,8 +42,8 @@
                   </ion-row>
                   <ion-row >
                       <ion-col class="column-left">
-                        <div>Arrival Time</div>
-                      <h2 style="padding-bottom: 2px !important"> {{schedule.dep_time}} </h2>
+                        <div>Remaining Seats</div>
+                      <h2 style="padding-bottom: 2px !important"> {{schedule.remaining_seats}} </h2>
                       </ion-col>
                     </ion-row>
             </ion-col>
@@ -66,7 +66,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col class="column-right" no-padding>
-                        <ion-item class="number">Total: <h2 item-end>{{schedule.customer+schedule.student+schedule.staff}}</h2></ion-item>
+                        <ion-item class="number">Total: <h2 item-end>{{schedule.no_of_booking}}</h2></ion-item>
                         
                     </ion-col>
                   </ion-row>

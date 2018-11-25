@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 import { AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
+import { CallNumber } from '@ionic-native/call-number';
 
 /**
  * Generated class for the ScanPage page.
@@ -33,7 +34,8 @@ export class ScanPage {
     private navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private callNumber: CallNumber
   ) {
     this.getPassenger();
   }
@@ -174,5 +176,42 @@ export class ScanPage {
       }
 
     });
+  }
+
+  showInfo(phone_num,username){
+    let alert = this.alertCtrl.create({
+      title: 'Contact : '+username,
+      message: 'Phone Number: '+phone_num,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Call',
+          handler: () => {
+            console.log('Call clicked');
+            if(phone_num==null){
+              let alert = this.alertCtrl.create({
+                title: 'Cannot Call',
+                subTitle: 'No phone number info',
+                buttons: ['Dismiss']
+              });
+              alert.present();
+            }else{
+              this.callNumber.callNumber(phone_num, true)
+              .then(res => console.log('Launched dialer!', res))
+              .catch(err => console.log('Error launching dialer', err));
+            }
+           
+            
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }
