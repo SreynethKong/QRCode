@@ -1424,7 +1424,7 @@ var AuthServiceProvider = (function () {
         else {
             return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"].create(function (observer) {
                 // At this point make a request to your backend to make a real check!
-                _this.http.get('http://shuttlebus.vkirirom.com/checkValidity?email=' + credentials.email + '&&password=' + credentials.password).map(function (res) { return res.json(); }).subscribe(function (data) {
+                _this.http.get('http://104.248.185.208:8080/checkValidity?email=' + credentials.email + '&&password=' + credentials.password).map(function (res) { return res.json(); }).subscribe(function (data) {
                     console.log(data);
                     if (data.validity == true) {
                         data.list_schedules.forEach(function (element) {
@@ -1499,7 +1499,7 @@ var AuthServiceProvider = (function () {
             var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
             headers.append('data', JSON.stringify(_this.passengerToUpdate));
             // headers.append('report', JSON.stringify(this.reportToUpdate));
-            _this.http.get('http://shuttlebus.vkirirom.com/updatePassenger?email=' + credential.email, { headers: headers })
+            _this.http.get('http://104.248.185.208:8080/updatePassenger?email=' + credential.email, { headers: headers })
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 console.log(data.update);
